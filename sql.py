@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import requests
 from bs4 import BeautifulSoup
+import webbrowser
 
 db = "./db/bookmarks.db"
 
@@ -95,9 +96,49 @@ def select_all_bookmarks(conn):
 
 def find_all_bookmarks():
     database = db
-
     # create a database connection
     conn = create_connection(database)
     with conn:
         print('All items: ')
         select_all_bookmarks(conn)
+
+
+def select_one_bookmark(conn, num):
+    """
+    Query for a single row in bookmarks table
+    :param conn: connection object
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT url FROM bookmarks WHERE id = ?", num)
+    result = cur.fetchone()
+    return result
+
+
+def open_in_browser(num):
+    # fetch url using id
+    database = db
+    conn = create_connection(database)
+    with conn:
+        site = select_one_bookmark(conn, num)
+    # open in default browser
+    webbrowser.open(site[0], 2)
+
+
+def delete_bookmark(conn, id):
+    """
+    Delete a task by task id
+    :param conn:  Connection to the SQLite database
+    :param id: id of the task
+    :return:
+    """
+    sql = 'DELETE FROM bookmarks WHERE id=?'
+    cur = conn.cursor()
+    cur.execute(sql, (id,))
+    print('Item deleted.')
+
+
+def delete_bookmark_by_id(id):
+    database = db
+    conn = create_connection(database)
+    with conn:
+        delete_bookmark(conn, id)

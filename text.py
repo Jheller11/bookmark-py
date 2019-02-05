@@ -9,6 +9,8 @@ Select program mode:
 \t6. Help
 ''',
     "help": "This is the help page.",
-    "get_url": "Enter url: ",
+    "get_url": 'Enter url (or type "q" to quit): ',
+    "open_url": 'Enter an id number to open in the browser (or type "q" to quit): ',
+    "get_delete_id": 'Enter an id number to delete (or type "q" to quit): '
 
 }
