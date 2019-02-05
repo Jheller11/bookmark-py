@@ -1,4 +1,4 @@
-from sql import create_db, insert_bookmark
+from sql import create_db, insert_bookmark, find_all_bookmarks
 from text import text
 
 print('Initializing.......')
@@ -14,7 +14,7 @@ def program():
         insert_bookmark(url)
     # Mode 2: Print all bookmarks
     elif mode is '2':
-        print('2')
+        find_all_bookmarks()
     # Mode 3: Search bookmarks
     elif mode is '3':
         print('3')

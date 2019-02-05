@@ -1,5 +1,9 @@
 import sqlite3
 from sqlite3 import Error
+import requests
+from bs4 import BeautifulSoup
+
+db = "./db/bookmarks.db"
 
 
 def create_connection(db_file):
@@ -31,7 +35,7 @@ def create_table(conn, create_table_sql):
 
 
 def create_db():
-    database = "./db/bookmarks.db"
+    database = db
     sql_create_bookmarks_table = """ CREATE TABLE IF NOT EXISTS bookmarks (
                                         id integer PRIMARY KEY,
                                         url text NOT NULL,
@@ -60,12 +64,40 @@ def create_bookmark(conn, info):
 
 
 def insert_bookmark(url):
-    database = "./db/bookmarks.db"
+    database = db
     # fetch info from url
-
+    res = requests.get(url)
+    data = res.text
+    soup = BeautifulSoup(data, 'html.parser')
+    bookmark = (url, soup.title.string)
     # create a database connection
     conn = create_connection(database)
     with conn:
         # create a new bookmark
         bookmark_id = create_bookmark(conn, bookmark)
         print(f"Bookmark successfully created at id: {bookmark_id}")
+
+
+def select_all_bookmarks(conn):
+    """
+    Query all rows in the bookmarks table
+    :param conn: the Connection object
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM bookmarks")
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+
+
+def find_all_bookmarks():
+    database = db
+
+    # create a database connection
+    conn = create_connection(database)
+    with conn:
+        print('All items: ')
+        select_all_bookmarks(conn)
