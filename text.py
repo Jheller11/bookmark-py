@@ -6,6 +6,9 @@ Select program mode:
 \t3. Search bookmarks.
 \t4. Delete  abookmark.
 \t5. Update a bookmark.
+\t6. Help
 ''',
-    "help": "This is the help page."
+    "help": "This is the help page.",
+    "get_url": "Enter url: ",
+
 }

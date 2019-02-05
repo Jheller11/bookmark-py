@@ -44,3 +44,28 @@ def create_db():
         create_table(conn, sql_create_bookmarks_table)
     else:
         print("Error! cannot create the database connection.")
+
+
+def create_bookmark(conn, info):
+    """ create a new item in bookmarks table
+    :param conn:
+    :param info:
+    :return: bookmark id
+    """
+    sql = ''' INSERT INTO bookmarks(url, title)
+                VALUES(?,?)'''
+    cur = conn.cursor()
+    cur.execute(sql, info)
+    return cur.lastrowid
+
+
+def insert_bookmark(url):
+    database = "./db/bookmarks.db"
+    # fetch info from url
+
+    # create a database connection
+    conn = create_connection(database)
+    with conn:
+        # create a new bookmark
+        bookmark_id = create_bookmark(conn, bookmark)
+        print(f"Bookmark successfully created at id: {bookmark_id}")
