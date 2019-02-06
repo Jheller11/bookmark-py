@@ -37,6 +37,8 @@ def program():
     # Mode 5: Update bookmark
     elif mode is '5':
         print('5')
+    elif mode is '6':
+        create_db()
     else:
         print('Invalid Entry')
 

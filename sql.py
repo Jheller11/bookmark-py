@@ -40,7 +40,8 @@ def create_db():
     sql_create_bookmarks_table = """ CREATE TABLE IF NOT EXISTS bookmarks (
                                         id integer PRIMARY KEY,
                                         url text NOT NULL,
-                                        title text
+                                        title text,
+                                        description text
                                     ); """
     # create a database connection
     conn = create_connection(database)
@@ -57,8 +58,8 @@ def create_bookmark(conn, info):
     :param info:
     :return: bookmark id
     """
-    sql = ''' INSERT INTO bookmarks(url, title)
-                VALUES(?,?)'''
+    sql = ''' INSERT INTO bookmarks(url, title, description)
+                VALUES(?,?,?)'''
     cur = conn.cursor()
     cur.execute(sql, info)
     return cur.lastrowid
@@ -70,7 +71,11 @@ def insert_bookmark(url):
     res = requests.get(url)
     data = res.text
     soup = BeautifulSoup(data, 'html.parser')
-    bookmark = (url, soup.title.string)
+    description = soup.find('meta', property='og:description')["content"]
+    if description:
+        bookmark = (url, soup.title.string, description)
+    else:
+        bookmark = (url, soup.title.string, "Description not found.")
     # create a database connection
     conn = create_connection(database)
     with conn:
