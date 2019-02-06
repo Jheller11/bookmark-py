@@ -1,4 +1,4 @@
-from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser, delete_bookmark_by_id
+from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser, delete_bookmark_by_id, print_to_csv
 from text import text
 
 print('Initializing.......')
@@ -40,10 +40,12 @@ def main():
         print('5')
     elif mode is '6':
         create_db()
+    elif mode is '7':
+        print_to_csv()
     else:
         print('Invalid Entry')
 
-    # ask user if they are done
+    # restart program or quit based on user input
     user_input = input(text["continue?"])
     if user_input is '':
         main()

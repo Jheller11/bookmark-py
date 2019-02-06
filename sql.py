@@ -3,6 +3,8 @@ from sqlite3 import Error
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
+from prettytable import PrettyTable
+import csv
 
 db = "./db/bookmarks.db"
 
@@ -41,6 +43,7 @@ def create_db():
                                         id integer PRIMARY KEY,
                                         url text NOT NULL,
                                         title text,
+                                        site_name text,
                                         description text
                                     ); """
     # create a database connection
@@ -58,8 +61,8 @@ def create_bookmark(conn, info):
     :param info:
     :return: bookmark id
     """
-    sql = ''' INSERT INTO bookmarks(url, title, description)
-                VALUES(?,?,?)'''
+    sql = ''' INSERT INTO bookmarks(url, title, site_name, description)
+                VALUES(?,?,?,?)'''
     cur = conn.cursor()
     cur.execute(sql, info)
     return cur.lastrowid
@@ -71,11 +74,20 @@ def insert_bookmark(url):
     res = requests.get(url)
     data = res.text
     soup = BeautifulSoup(data, 'html.parser')
-    description = soup.find('meta', property='og:description')["content"]
-    if description:
-        bookmark = (url, soup.title.string, description)
+    description = soup.find(
+        'meta', property='og:description')
+    site_name = soup.find(
+        'meta', property='og:site_name')
+    if description == None:
+        description = 'Description not found.'
     else:
-        bookmark = (url, soup.title.string, "Description not found.")
+        description = description["content"]
+    if site_name == None:
+        site_name = 'Not found.'
+    else:
+        site_name = site_name["content"]
+    bookmark = (url, soup.title.string,
+                site_name, description)
     # create a database connection
     conn = create_connection(database)
     with conn:
@@ -91,12 +103,14 @@ def select_all_bookmarks(conn):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM bookmarks")
-
+    cur.execute("SELECT id, title, site_name FROM bookmarks")
     rows = cur.fetchall()
 
+    x = PrettyTable()
+    x.field_names = ["ID", "title", "site name"]
     for row in rows:
-        print(row)
+        x.add_row(row)
+    print(x)
 
 
 def find_all_bookmarks():
@@ -147,3 +161,18 @@ def delete_bookmark_by_id(id):
     conn = create_connection(database)
     with conn:
         delete_bookmark(conn, id)
+
+
+def print_to_csv():
+    database = db
+    conn = create_connection(database)
+    sql = 'SELECT * FROM bookmarks'
+    cur = conn.cursor()
+    cur.execute(sql)
+    rows = cur.fetchall()
+    print(rows)
+    outfile = open("./table.csv", "w")
+    writer = csv.writer(outfile)
+    writer.writerow(['ID', 'URL', 'Title', 'Site', 'Description'])
+    writer.writerows(rows)
+    outfile.close()

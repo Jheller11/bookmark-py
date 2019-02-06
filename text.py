@@ -7,7 +7,8 @@ Select program mode:
 \t3. Search bookmarks.
 \t4. Delete a bookmark.
 \t5. Update a bookmark.
-\t6. Create DB
+\t6. Create DB.
+\t7. Export current DB to CSV.
 ''',
     "help": "This is the help page.",
     "get_url": 'Enter url (or type "q" to quit): ',
