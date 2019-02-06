@@ -2,11 +2,12 @@ from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser,
 from text import text
 
 print('Initializing.......')
+print(text["welcome"])
 
 # Execute control flow of program
 
 
-def program():
+def main():
     mode = input(text["get_mode"])
     # Mode 1: Add a new URL to the table (scrape url for data)
     if mode is '1':
@@ -42,5 +43,12 @@ def program():
     else:
         print('Invalid Entry')
 
+    # ask user if they are done
+    user_input = input(text["continue?"])
+    if user_input is '':
+        main()
+    else:
+        pass
 
-program()
+
+main()
