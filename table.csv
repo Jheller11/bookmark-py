@@ -1,2 +1,9 @@
 ID,URL,Title,Site,Description
 1,https://stackify.com/top-command-line-tools/,"50 Useful Command Line Tools Developers Will Love: Productivity, Development, Utility, and More",Stackify,Developers and those with engineering responsibilities are fond of calling terminal their home. Anyone with a Unix system has to frequently interact with the Terminal in one way or the other. And customization has always
+2,https://stackoverflow.com/questions/9320766/python-math-typeerror-nonetype-object-is-not-subscriptable,Python Math - TypeError: 'NoneType' object is not subscriptable - Stack Overflow,Stack Overflow,"I'm making a small program for math (no particular reason, just kind of wanted to) and I ran into the error ""TypeError: 'NoneType' object is not subscriptable.
+
+I have never before seen this error,..."
+3,https://stackoverflow.com/questions/5015483/test-if-an-attribute-is-present-in-a-tag-in-beautifulsoup,python - Test if an attribute is present in a tag in BeautifulSoup - Stack Overflow,Stack Overflow,"I would like to get all the &lt;script&gt; tags in a document and then process each one based on the presence (or absence) of certain attributes.
+
+E.g., for each &lt;script&gt; tag, if the attribut..."
+4,https://www.pytables.org/,Welcome to PyTables’ documentation! — PyTables 3.4.4 documentation,Not found.,Description not found.

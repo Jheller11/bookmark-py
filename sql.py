@@ -170,7 +170,6 @@ def print_to_csv():
     cur = conn.cursor()
     cur.execute(sql)
     rows = cur.fetchall()
-    print(rows)
     outfile = open("./table.csv", "w")
     writer = csv.writer(outfile)
     writer.writerow(['ID', 'URL', 'Title', 'Site', 'Description'])

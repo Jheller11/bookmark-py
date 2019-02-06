@@ -1,7 +1,8 @@
 from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser, delete_bookmark_by_id, print_to_csv
 from text import text
 
-print('Initializing.......')
+print(text['start_session'])
+
 print(text["welcome"])
 
 # Execute control flow of program
@@ -54,3 +55,5 @@ def main():
 
 
 main()
+
+print(text['end_session'])

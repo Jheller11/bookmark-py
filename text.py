@@ -14,6 +14,15 @@ Select program mode:
     "get_url": 'Enter url (or type "q" to quit): ',
     "open_url": 'Enter an id number to open in the browser (or type "q" to quit): ',
     "get_delete_id": 'Enter an id number to delete (or type "q" to quit): ',
-    "continue?": 'Hit enter to continue or "q" to quit: '
-
+    "continue?": 'Hit enter to continue or "q" to quit: ',
+    "start_session": '''
+    -------------------------------
+    \tSession Started
+    -------------------------------
+    ''',
+    "end_session": '''
+    -------------------------------
+    \tSession Closed
+    -------------------------------
+    ''',
 }
