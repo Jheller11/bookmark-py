@@ -49,3 +49,8 @@ def insert_bookmark(url):
         print(f"Bookmark successfully created at id: {bookmark_id}")
 
 ```
+
+## Next Features to Add
+
+1. Search (title, description, site name)
+2. Categories (eg. JS, Python, React, Architecture, Performance)

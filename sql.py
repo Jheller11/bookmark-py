@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import webbrowser
 from prettytable import PrettyTable
 import csv
+from text import sql
 
 db = "./db/bookmarks.db"
 
@@ -39,18 +40,12 @@ def create_table(conn, create_table_sql):
 
 def create_db():
     database = db
-    sql_create_bookmarks_table = """ CREATE TABLE IF NOT EXISTS bookmarks (
-                                        id integer PRIMARY KEY,
-                                        url text NOT NULL,
-                                        title text,
-                                        site_name text,
-                                        description text
-                                    ); """
+    sql_command = sql["create_table"]
     # create a database connection
     conn = create_connection(database)
     if conn is not None:
         # create bookmarks table
-        create_table(conn, sql_create_bookmarks_table)
+        create_table(conn, sql_command)
     else:
         print("Error! cannot create the database connection.")
 
@@ -61,10 +56,9 @@ def create_bookmark(conn, info):
     :param info:
     :return: bookmark id
     """
-    sql = ''' INSERT INTO bookmarks(url, title, site_name, description)
-                VALUES(?,?,?,?)'''
+    sql_command = sql["create_bookmark"]
     cur = conn.cursor()
-    cur.execute(sql, info)
+    cur.execute(sql_command, info)
     return cur.lastrowid
 
 
@@ -128,9 +122,27 @@ def select_one_bookmark(conn, num):
     :param conn: connection object
     """
     cur = conn.cursor()
-    cur.execute("SELECT url FROM bookmarks WHERE id = ?", num)
+    cur.execute("SELECT * FROM bookmarks WHERE id = ?", num)
     result = cur.fetchone()
     return result
+
+
+def print_one_bookmark(num):
+    database = db
+    conn = create_connection(database)
+    bookmark = select_one_bookmark(conn, num)
+    if bookmark:
+        print(f""" 
+            -------------------------
+            ID: {bookmark[0]}
+            URL: {bookmark[1]}
+            Title: {bookmark[2]}
+            Site: {bookmark[3]}
+            Desc.: {bookmark[4]}
+            -------------------------
+            """)
+    else:
+        print('Not Found')
 
 
 def open_in_browser(num):
@@ -140,7 +152,7 @@ def open_in_browser(num):
     with conn:
         site = select_one_bookmark(conn, num)
     # open in default browser
-    webbrowser.open(site[0], 2)
+    webbrowser.open(site[1], 2)
 
 
 def delete_bookmark(conn, id):

@@ -1,4 +1,4 @@
-from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser, delete_bookmark_by_id, print_to_csv
+from sql import create_db, insert_bookmark, find_all_bookmarks, open_in_browser, delete_bookmark_by_id, print_to_csv, print_one_bookmark
 from text import text
 
 print(text['start_session'])
@@ -26,9 +26,13 @@ def main():
             pass
         else:
             open_in_browser(user_input)
-    # Mode 3: Search bookmarks
+    # Mode 3: Print bookmark
     elif mode is '3':
-        print('3')
+        user_input = input(text["print_one"])
+        if user_input == 'q':
+            pass
+        else:
+            print_one_bookmark(user_input)
     # Mode 4: Delete bookmark
     elif mode is '4':
         user_input = input(text["get_delete_id"])
@@ -38,7 +42,7 @@ def main():
             delete_bookmark_by_id(user_input)
     # Mode 5: Update bookmark
     elif mode is '5':
-        print('5')
+        print('No')
     elif mode is '6':
         create_db()
     elif mode is '7':

@@ -4,7 +4,7 @@ text = {
 Select program mode:
 \t1. Add a new bookmark.
 \t2. Print all bookmarks.
-\t3. Search bookmarks.
+\t3. Print one bookmark.
 \t4. Delete a bookmark.
 \t5. Update a bookmark.
 \t6. Create DB.
@@ -25,4 +25,17 @@ Select program mode:
     \tSession Closed
     -------------------------------
     ''',
+    "print_one": 'Enter an id number to view details (or type "q" to quit): ',
+}
+
+sql = {
+    "create_table": """ CREATE TABLE IF NOT EXISTS bookmarks (
+                                        id integer PRIMARY KEY,
+                                        url text NOT NULL,
+                                        title text,
+                                        site_name text,
+                                        description text
+                                    ); """,
+    "create_bookmark": ''' INSERT INTO bookmarks(url, title, site_name, description)
+                VALUES(?,?,?,?)''',
 }
