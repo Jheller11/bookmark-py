@@ -38,4 +38,5 @@ sql = {
                                     ); """,
     "create_bookmark": ''' INSERT INTO bookmarks(url, title, site_name, description)
                 VALUES(?,?,?,?)''',
+    "delete_by_id": 'DELETE FROM bookmarks WHERE id=?'
 }

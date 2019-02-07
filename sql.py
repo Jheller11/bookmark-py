@@ -162,9 +162,9 @@ def delete_bookmark(conn, id):
     :param id: id of the task
     :return:
     """
-    sql = 'DELETE FROM bookmarks WHERE id=?'
+    sql_command = sql["delete_by_id"]
     cur = conn.cursor()
-    cur.execute(sql, (id,))
+    cur.execute(sql_command, (id,))
     print('Item deleted.')
 
 
